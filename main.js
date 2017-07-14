@@ -1,4 +1,9 @@
 
+//variables to track these states  //This is also known as 'state management'
+var currentSongNumber = 1;     
+var willLoop = 0;           
+var willShuffle = 0; // will use this soon
+
 
 //**********************Songs Details***************************************************************************************
 var songs = [{
@@ -155,16 +160,33 @@ addSongNameClickEvent(fileNames[3],4);
 //******************************************************************
     $('.welcome-screen button').on('click', function() {
         var name = $('#name-input').val();
-        if (name.length > 2) {
+        if (name.length > 2) 
+        {
             var message = "Welcome, " + name;
             $('.main .user-name').text(message);
             $('.welcome-screen').addClass('hidden');
             $('.main').removeClass('hidden');
-        } else {
+        } 
+        else 
+          {
             $('#name-input').addClass('error');
-        }
+          }
     });
 //******************************************************************
+
+//************songs play in contionous loop**********************************************
+$('.fa-repeat').on('click',function() {
+    $('.fa-repeat').toggleClass('disabled')   //toggle class ko add or remove krega
+    willLoop = 1 - willLoop;           //It changes the value of the variable willLoop
+});
+//******************************************************************************************
+
+//*********play song randomly in loop*********************************************************
+$('.fa-random').on('click',function() {
+    $('.fa-random').toggleClass('disabled')
+    willShuffle = 1 - willShuffle;
+});
+//*********************************************************************************************
 
 // ********play icon or pause icon is clicked then play/pause the song **********
     $('.play-icon').on('click', function() 
@@ -174,11 +196,12 @@ addSongNameClickEvent(fileNames[3],4);
 //*******************************************************************************
 
 // ******** if space bar is clicked then play/pause the song  *************
-    $('body').on('keypress', function(event) 
+    $('body').on('keypress', function(event)  //event getting a no. of info  
     {
+      // console.log(event);
       var target = event.target;       //1. Save the target of the event in a variable
                                        //The target is the place where the event took place
-        if (event.keyCode == 32 && target.tagName !='INPUT')  //This condition first checks if the spacebar key is pressed
+        if (event.keyCode == 32 && target.tagName !='INPUT')  //This condition first checks if the spacebar key is pressed // Don't forget to write the tag name in CAPS
                                                                 //Then it checks if the place where the event occurred had an input tag or not        
         {
 
@@ -300,25 +323,11 @@ for(var i =0; i < songs.length;i++) //songs.length=length of the OBJECT 'songs'
 }
 *///***********************************************************************************************
 
-$('#songs').DataTable(
+$('#songs').DataTable(        //initializing DataTables
   {
-        paging: false
+        paging: false        //turn off the page count by passing object in DataTable() fxn
     }
 );
-
-var currentSongNumber = 1;
-var willLoop = 0;
-var willShuffle = 0; // will use this soon
-
-$('.fa-repeat').on('click',function() {
-    $('.fa-repeat').toggleClass('disabled')
-    willLoop = 1 - willLoop;           //It changes the value of the variable willLoop
-});
-
-$('.fa-random').on('click',function() {
-    $('.fa-random').toggleClass('disabled')
-    willShuffle = 1 - willShuffle;
-});
 
 /*function timeJump()             //jumps to the first end of the song 
 {
@@ -326,32 +335,48 @@ $('.fa-random').on('click',function() {
     song.currentTime = song.duration - 5;
 }
 */
-$('audio').on('ended',function() {
+
+//*********************************************************************************************************************
+$('audio').on('ended',function()    //on('ended') event tells the end of the audio or video
+{                                   
     var audio = document.querySelector('audio');
-    if (willShuffle == 1) {
-        var nextSongNumber = randomExcluded(1,4,currentSongNumber); // Calling our function from Stackoverflow
-        var nextSongObj = songs[nextSongNumber-1];
-        audio.src = nextSongObj.fileName;
+
+    if (willShuffle == 1)          //if shuffle of song is on
+    {
+        var nextSongNumber = randomExcluded(1,4,currentSongNumber); //Calling our fxn from stackoverflow 
+                                                         //obtain a random integer number in a certain range [1, 4], excluding one value currentSongNumber
+                                                //generate it between 1 and 4-1, and then increment it by one if it's higher than or equal to currentSongNumber 
+        var nextSongObj = songs[nextSongNumber-1];        
+        audio.src = nextSongObj.fileName;     //updating source of song
         toggleSong();
         changeCurrentSongDetails(nextSongObj);
         currentSongNumber = nextSongNumber;
     }
-    else if(currentSongNumber < 4) {
-        var nextSongObj = songs[currentSongNumber];
+
+    else if(currentSongNumber < 4)  //this code will just play the next song after the current song ends
+    {                             //means 1st to last song tk loop main chlega 
+                                //lekin last song pr jakr loop ruk jayega     
+        var nextSongObj = songs[currentSongNumber]; //getting currentsong info from the 'songs' ARRAY
+                              //initially currentSongNumber=1
+        audio.src = nextSongObj.fileName;        //changing the source of the song
+        toggleSong();
+        changeCurrentSongDetails(nextSongObj);     //updating image
+        currentSongNumber = currentSongNumber + 1;   //changing current song number
+    }
+
+    else if(willLoop == 1)   //user is on the last song and willLoop is on 
+    {                       //user wants after last song first song will play
+        var nextSongObj = songs[0];  //nextSongObj store info of first song which is in ARRAY 'songs[0]'
         audio.src = nextSongObj.fileName;
         toggleSong();
-        changeCurrentSongDetails(nextSongObj);
-        currentSongNumber = currentSongNumber + 1;
+        changeCurrentSongDetails(nextSongObj); //passing song info to changeCurrentSongDetails() fxn
+        currentSongNumber =  1;   //update  variable value
     }
-    else if(willLoop == 1) {
-        var nextSongObj = songs[0];
-        audio.src = nextSongObj.fileName;
-        toggleSong();
-        changeCurrentSongDetails(nextSongObj);
-        currentSongNumber =  1;
-    }
-    else {
-        $('.play-icon').removeClass('fa-pause').addClass('fa-play');
-        audio.currentTime = 0;
+
+    else       //The else condition runs if we are on the last song
+    {
+        $('.play-icon').removeClass('fa-pause').addClass('fa-play');   //When the last song ends, it changes the play icon 
+        audio.currentTime = 0;    //resets the song currentTime to zero
     }
 })
+//*****************************************************************************************************************************
