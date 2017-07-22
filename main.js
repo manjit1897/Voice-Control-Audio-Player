@@ -37,7 +37,17 @@ var songs = [{
         'duration': '2:29',
         'fileName': 'song4.mp3',
         'image' : 'song4.jpg'
-    }];
+    },
+    {   
+        'name': 'The Breakup Song',
+        'artist': 'Nakash Aziz, Arijit Singh, Badshah, Jonita Gandhi',
+        'album': 'Ae Dil Hai Mushkil',
+        'duration': '2:29',
+        'fileName': 'song4.mp3',
+        'image' : 'song4.jpg'
+
+    }
+    ];
 //**************************************************************************************************************************
 
 //************Addind togglesong() function to play and pause the song
@@ -102,17 +112,6 @@ toggleSong();
 //******************************************************************************************************
 */
 
-
-//**********************for loop for calling the addSongNameClickEvent(songName, position) fxn*********** 
-
-/*for (var i = 0; i < fileNames.length ; i++)  //The first part is the initializing statement i.e. where we want to start
-{                            //After running the code once, it increments the value of i by 1
-                 //hen the condition is checked, if the condition is satisfied, only then the code inside the curly braces is executed
-    addSongNameClickEvent(fileNames[i],i+1);  //if i=0 then i+1=1
-}
-*/
-//*************************************************************************************************
-
 //***********************************************************************************************
 function changeCurrentSongDetails(songObj) 
 {
@@ -152,31 +151,59 @@ function addSongNameClickEvent(songObj, position)  //addSongNameClickEvent fxn g
   });
 }
 
-/*addSongNameClickEvent(fileNames[0],1);   //call our function 4 times to add all the four events
-addSongNameClickEvent(fileNames[1],2);   //The first parameter is the songName, that we are getting from the fileNames array
-addSongNameClickEvent(fileNames[2],3);   //second parameter is the position
-addSongNameClickEvent(fileNames[3],4);
-*/
+
 //******************************************************************
     $('.welcome-screen button').on('click', function() {
         var name = $('#name-input').val();
-        if (name.length > 2) 
+        var email =$('#email-input').val();
+            email=email.toLowerCase();
+        var password =$('#password-input').val();
+        if (name.length > 3) 
         {
+          if(email.match(/test@acadview.com/) && password.match(/JavascriptRocks/))
+          {
             var message = "Welcome, " + name;
             $('.main .user-name').text(message);
             $('.welcome-screen').addClass('hidden');
             $('.main').removeClass('hidden');
+          }
+          else
+          {
+            $('#email-input').addClass('error');
+            $('#password-input').addClass('error');
+          }
         } 
         else 
           {
+            if(email.match(/test@acadview.com/) && password.match(/JavascriptRocks/))
+            {
             $('#name-input').addClass('error');
+            }
+            else
+            {
+              $('#email-input').addClass('error');
+              $('#password-input').addClass('error');
+              $('#name-input').addClass('error');
+            }
           }
     });
-//******************************************************************
+
+ /* $('body').on('keypress', function(event)
+  {
+      var target = event.target;       //1. Save the target of the event in a variable
+                                       //The target is the place where the event took place
+     if (event.keyCode == 13 )  //This condition first checks if the ENTER key is pressed // Don't forget to write the tag name in CAPS
+                                                                //Then it checks if the place where the event occurred had an input tag or not        
+        {
+
+          $('.welcome-button').click();
+        }
+  });
+*///******************************************************************
 
 //************songs play in contionous loop**********************************************
 $('.fa-repeat').on('click',function() {
-    $('.fa-repeat').toggleClass('disabled')   //toggle class ko add or remove krega
+    $('.fa-repeat').toggleClass('disabled')  //toggle class ko add or remove krega
     willLoop = 1 - willLoop;           //It changes the value of the variable willLoop
 });
 //******************************************************************************************
@@ -184,7 +211,7 @@ $('.fa-repeat').on('click',function() {
 //*********play song randomly in loop*********************************************************
 $('.fa-random').on('click',function() {
     $('.fa-random').toggleClass('disabled')
-    willShuffle = 1 - willShuffle;
+        willShuffle = 1 - willShuffle;
 });
 //*********************************************************************************************
 
@@ -194,6 +221,25 @@ $('.fa-random').on('click',function() {
         toggleSong();
     });
 //*******************************************************************************
+$('.fa-volume-down').on('click',function() {
+    var song = document.querySelector('audio');
+    song.muted = true;
+});
+
+$('.fa-volume-up').on('click',function() {
+    var song = document.querySelector('audio');
+    song.muted = false;
+});
+function volumeSliderChange()
+{
+  var song = document.querySelector('audio');
+  var vol = document.getElementById("slider");
+  
+  console.log(vol.value);
+  slider.onchange = function() {
+     song.volume = vol.value;
+  }
+}
 
 // ******** if space bar is clicked then play/pause the song  *************
     $('body').on('keypress', function(event)  //event getting a no. of info  
@@ -246,17 +292,8 @@ $('.song-duration').text(duration);
 //***************************************************************************************************************************
 
 //***********window.onload fxn to call updateCurrentTime() fxn***************************************************************
-/*
-//ARRAY variable to store names of song
-var songList = ['Badri Ki Dulhania (Title Track)',
-'Humma Song', 'Nashe Si Chadh Gayi', 'The Breakup Song'];
-//ARRAY variable to store name of albums
-var albumList = ['Badrinath ki Dulhania','Ok Jaanu','Befikre','Ae Dil Hai Mushkil'];
-//Array variable to store duration of songs
-var durationList = ['2:56','3:15','2:34','2:29'];
-//Array variable to store artists of songs
-var artistList = ['Artist #1', 'Artist #2', 'Artist #3', 'Artist #4'];
-*/
+
+
 window.onload = function()   
 { 
 /*setTimeout(function()   //code sirf aik bar run hoga
@@ -265,23 +302,7 @@ updateCurrentTime();
 {
 },1000);
 */
-/*
-$('#song1 ').text(songList[0]);    //displaying song name list
-$('#song2 ').text(songList[1]);   //1. Use jQuery to find an element with id of song
-$('#song3').text(songList[2]);  //2. Change the text of that element to the value that is stored in the element of the array songList
-$('#song4').text(songList[3]);
-*/
-/*
-for(var i =0; i < songList.length;i++)   //for loop for displaying song name ,artist, album and duration
-{
-  var name = '#song' + (i+1);      //name variable stores song id
-  var song = $(name);             //putting values which are in song id or name variable in song variable 
-  song.find('.song-name').text(songList[i]);  //
-  song.find('.song-artist').text(artistList[i]);
-  song.find('.song-album').text(albumList[i]); // Added
-  song.find('.song-length').text(durationList[i]); // Added
-} 
-*/
+
 updateCurrentTime();  //Now as soon as our website is loaded, updateCurrentTime runs and then after every 1 second, setInterval makes it run again
 changeCurrentSongDetails(songs[0]);
 setInterval(function()    // code bar-bar run hoga after 1 second 
@@ -335,6 +356,15 @@ $('#songs').DataTable(        //initializing DataTables
     song.currentTime = song.duration - 5;
 }
 */
+/*
+$('.fa-step-forward').on('click',function() {
+    var audio = document.querySelector('audio');
+    var nextSongObj = songs[currentSongNumber];
+    audio.src = nextSongObj.fileName;
+    changeCurrentSongDetails(nextSongObj);
+    currentSongNumber =currentSongNumber-1;
+});
+*///*******************playing next song********************************************
 
 //*********************************************************************************************************************
 $('audio').on('ended',function()    //on('ended') event tells the end of the audio or video

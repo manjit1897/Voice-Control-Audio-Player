@@ -11,19 +11,31 @@
 
 <body>
     <div class="wrapper">        
-        <section class="welcome-screen hidden">
-            <h1> Welcome to Songify </h1>
-            <h3> Enter name to access your account </h3>
-            <div class="input-wrapper">       
-                <input type="text" placeholder="Name" id="name-input">
-                <button> Go </button>
+        <section class="welcome-screen ">  
+          <header id="logo">
+          <ul class="logo-appname" style="margin-top: 20px">
+             <a class="logo-appname font-size"  >
+               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAMo9m2u8l_p9cGNbULlWiy5lBilER1p9-a-Pc6eQktk1Q8IzY" height="70px" width="70px" style="opacity: 1.0; margin-top: 0px; margin-left: 0px; border-radius: 50% ">
+                SmMusic
+             </a>
+          </ul>  
+          </header>               
+            <h1 style="margin-top: 100px; color: white;"> Welcome to SmMusic </h1>
+            <h3 style="color: white"> Login into your account </h3>
+            <div class="input-wrapper" style="margin-top: 20px"> 
+                 <input type="email" class="input-box"   placeholder="Your email" id="email-input"><br>     <!-- test@acadview.com -->
+                 <input type="password" class="input-box" placeholder="Password" id="password-input"> <br>  <!-- JavascriptRocks -->
+                <input type="text" class="input-box" placeholder="Name" id="name-input"> <br>      
+                <button class="welcome-button" style="width: 70px; height:30px; margin-top:20px"> Go </button>
             </div>                           
         </section>
+
+
         <div class="main">             
             <header>
                 <div class="right floated user-name"> </div>        
             </header>
-            <section class="content">
+            <section class="content display">
                 <audio></audio>
 
               <table id="songs">
@@ -62,7 +74,7 @@
                     <td class="song-album"></td>
                     <td class="song-length"></td>
                  </tr>
-              </div> 
+                </div> 
               </tbody>
             </table>
         
@@ -77,35 +89,49 @@
         
 
             </section>
+
+    
+      <!-- <section class="display">          
+        <div class="command-list-heading ">
+          <p class="big text-center"><i class="fa fa-info-circle"  aria-hidden="true"></i> Available Commands:</p>
+          <ul class="command-list">
+            <li class="play-command"><strong>Play</strong></li>
+            <li class=""><strong>Pause</strong></li>
+            <li class=""><strong>Next</strong></li>
+            <li class=""><strong>Previous</strong> </li>
+          </ul>
+        </div>
+    </section>
+     -->
             <footer>
-                <div class="controls">                   <!-- 3 -->
+                <div class="controls">                   
                     <div class="player-buttons">
-                        <i class="fa fa-random clickable disabled" aria-hidden="true"></i>
+                        <i class="fa fa-random clickable disabled"  aria-hidden="true"></i>
                         <i class="fa fa-step-backward clickable" aria-hidden="true"></i>
                         <i class="fa fa-play clickable play-icon" aria-hidden="true"></i>
                         <i class="fa fa-step-forward clickable" aria-hidden="true"></i>
                         <i class="fa fa-repeat disabled clickable" aria-hidden="true"></i>
-                    </div>                              <!-- 2 -->
-                    <div class="progress-wrapper">         <!-- 3 -->
+                        <i class="fa fa-volume-down clickable" aria-hidden="true"></i>
+                        <input id="slider" class="slider-position" type="range" min="0" max="100" value="50"   > 
+                        <i class="fa fa-volume-up clickable" aria-hidden="true"></i>
+                    </div>                              
+                    <div class="progress-wrapper">         
                         <span class="time-elapsed"> </span>
-                        <div class="player-progress">          <!-- 4 -->
-                            <div class="progress-filled"> </div>      <!-- -- -->
+                        <div class="player-progress">          
+                            <div class="progress-filled"> </div>     
                         </div>
                          <span class="song-duration"></span>
-                    </div>                                           <!-- 3 -->
-                </div>                                              <!-- 2 -->
+                    </div>                                          
+                </div>                                              
             </footer>
-        </div>                                                        <!-- 1 -->
+        </div>                                                       
     </div>                                                          
-      <!-- 0 -->
-    <script src="jquery.js">
-    </script>
+      
+<script src="jquery.js"></script>
 
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js">
-    </script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
-    <script src="main.js">
-    </script>
+<script src="main.js"></script>
 </body>
 
 </html>
