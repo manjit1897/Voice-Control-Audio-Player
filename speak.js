@@ -24,6 +24,7 @@ if (window['webkitSpeechRecognition']) {
                                                                     //indexOf() method tells index of
                 speechRecognizer.abort();
                 processCommands(el);
+                console.log(el);
                 //audioPlayer.toggleSpinner();
                 results = [];
                 throw new BreakLoopException;
