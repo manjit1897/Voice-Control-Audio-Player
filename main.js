@@ -37,15 +37,6 @@ var songs = [{
         'duration': '2:29',
         'fileName': 'song4.mp3',
         'image' : 'song4.jpg'
-    },
-    {   
-        'name': 'The Breakup Song',
-        'artist': 'Nakash Aziz, Arijit Singh, Badshah, Jonita Gandhi',
-        'album': 'Ae Dil Hai Mushkil',
-        'duration': '2:29',
-        'fileName': 'song4.mp3',
-        'image' : 'song4.jpg'
-
     }
     ];
 //**************************************************************************************************************************
@@ -127,7 +118,8 @@ function changeCurrentSongDetails(songObj)
 
 //********************calling all the songs through a single fxn addSongNameClickEvent()************** 
 function addSongNameClickEvent(songObj, position)  //addSongNameClickEvent fxn getting songName and positon as a parameter 
-{                              //then the condition is checked, if the condition is satisfied, only then the code inside the curly braces is executed
+{ console.log(songObj); //then the condition is checked, if the condition is satisfied, only then the code inside the curly braces is executed
+  console.log(currentSongNumber);
   var songName = songObj.fileName; // New Variable 
   var id = '#song' + position;  //storing song id in variable id
   $(id).click(function()    //So if position = 1, the value in our 'id' variable is #song1
@@ -205,6 +197,7 @@ function addSongNameClickEvent(songObj, position)  //addSongNameClickEvent fxn g
 $('.fa-repeat').on('click',function() {
     $('.fa-repeat').toggleClass('disabled')  //toggle class ko add or remove krega
     willLoop = 1 - willLoop;           //It changes the value of the variable willLoop
+    console.log(currentSongNumber);
 });
 //******************************************************************************************
 
@@ -212,6 +205,7 @@ $('.fa-repeat').on('click',function() {
 $('.fa-random').on('click',function() {
     $('.fa-random').toggleClass('disabled')
         willShuffle = 1 - willShuffle;
+        console.log(currentSongNumber);
 });
 //*********************************************************************************************
 
@@ -219,6 +213,7 @@ $('.fa-random').on('click',function() {
     $('.play-icon').on('click', function() 
     {
         toggleSong();
+        console.log(currentSongNumber);
     });
 //*******************************************************************************
 $('.fa-volume-down').on('click',function() {
@@ -302,7 +297,7 @@ updateCurrentTime();
 {
 },1000);
 */
-
+console.log(currentSongNumber);
 updateCurrentTime();  //Now as soon as our website is loaded, updateCurrentTime runs and then after every 1 second, setInterval makes it run again
 changeCurrentSongDetails(songs[0]);
 setInterval(function()    // code bar-bar run hoga after 1 second 
@@ -322,54 +317,64 @@ for(var i =0; i < songs.length;i++) //songs.length=length of the OBJECT 'songs'
     addSongNameClickEvent(obj,i+1);  //calling addSongNameClickEvent() fxn and passing parameter song and its position
     }
 
-}
-//***********************************************************************************************
-
-//***************window.onload function to display details of songs******************************   
-/*window.onload = function() 
-{
-  changeCurrentSongDetails(songs[0]);    //1. we are showing the song details of the first song by default.
-                                          //2. songs[0] gives us the song object for the first song!
-  for(var i =0; i < songs.length;i++) //songs.length=length of the OBJECT 'songs'
-  {
-    var obj = songs[i];            //storing i value in 'obj' variable
-    var name = '#song' + (i+1);   //storing id of <div class="song" id="song1" >
-    var song = $(name);             //storing values that comes under name=id '#song_X'
-    song.find('.song-name').text(obj.name);    //finding song name under class .song-name and getting key value of object 'songs' 
-    song.find('.song-artist').text(obj.artist);
-    song.find('.song-album').text(obj.album);
-    song.find('.song-length').text(obj.duration);
-    addSongNameClickEvent(obj,i+1);  //calling addSongNameClickEvent() fxn and passing parameter song and its position
-    }
-}
-*///***********************************************************************************************
-
 $('#songs').DataTable(        //initializing DataTables
   {
         paging: false        //turn off the page count by passing object in DataTable() fxn
     }
 );
 
-/*function timeJump()             //jumps to the first end of the song 
+ $('.play-icon').on('click', function() 
+    {  
+       var audio = document.querySelector('audio');
+       var nextSongObj = songs[0];  //nextSongObj store info of first song which is in ARRAY 'songs[0]'
+       audio.src = nextSongObj.fileName;
+       toggleSong();
+       changeCurrentSongDetails(nextSongObj); //passing song info to changeCurrentSongDetails() fxn
+       currentSongNumber =  1;   //update  variable value
+    });
+}
+//***********************************************************************************************
+ 
+/*
+function timeJump()             //jumps to the first end of the song 
 {
     var song = document.querySelector('audio')
-    song.currentTime = song.duration - 5;
+    song.currentTime = song.duration - 0.1;
+}*/
+
+//*******************playing next song********************************************
+function nextSongPlay()
+{
+  var audio = document.querySelector('audio');
+      if(currentSongNumber < 4)
+      {  
+        var nextSongObj=songs[currentSongNumber] //getting currentsong info from the 'songs' ARRAY
+                              //initially currentSongNumber=1 
+         audio.src = nextSongObj.fileName;        //changing the source of the song
+        toggleSong();
+        changeCurrentSongDetails(nextSongObj);     //updating image
+        currentSongNumber = currentSongNumber + 1;   //changing current song number
+      } 
+      else
+      {
+        var nextSongObj = songs[0];  //nextSongObj store info of first song which is in ARRAY 'songs[0]'
+        audio.src = nextSongObj.fileName;
+        toggleSong();
+        changeCurrentSongDetails(nextSongObj); //passing song info to changeCurrentSongDetails() fxn
+        currentSongNumber =  1;   //update  variable value
+      } 
 }
-*/
-/*
-$('.fa-step-forward').on('click',function() {
-    var audio = document.querySelector('audio');
-    var nextSongObj = songs[currentSongNumber];
-    audio.src = nextSongObj.fileName;
-    changeCurrentSongDetails(nextSongObj);
-    currentSongNumber =currentSongNumber-1;
-});
-*///*******************playing next song********************************************
+
+$('.fa-step-forward').on('click', function() 
+  { 
+    nextSongPlay()     
+  });
+
 
 //*********************************************************************************************************************
-$('audio').on('ended',function()    //on('ended') event tells the end of the audio or video
-{                                   
-    var audio = document.querySelector('audio');
+function songOnEnd()
+{
+  var audio = document.querySelector('audio');
 
     if (willShuffle == 1)          //if shuffle of song is on
     {
@@ -408,5 +413,31 @@ $('audio').on('ended',function()    //on('ended') event tells the end of the aud
         $('.play-icon').removeClass('fa-pause').addClass('fa-play');   //When the last song ends, it changes the play icon 
         audio.currentTime = 0;    //resets the song currentTime to zero
     }
+}
+$('audio').on('ended',function()    //on('ended') event tells the end of the audio or video
+{                                   
+  songOnEnd();   
 })
 //*****************************************************************************************************************************
+function processCommands(cmd)
+{
+  switch (cmd) {
+      case "play":
+           play();
+        break;
+      case 'pause':
+           stop();
+        break;
+      case "stop":
+           stop(true);
+        break;
+      case "next":
+           next();
+        break;
+      case "previous":
+           prev();
+        break;
+      default:
+        this.speak("Your command was invalid!", false);
+    }
+}
