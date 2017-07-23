@@ -6,7 +6,7 @@ if (window['webkitSpeechRecognition']) {
     // and their commands are final. Set to false by default
     speechRecognizer.interimResults = true;
     speechRecognizer.lang = "en-IN";
-    var currentCommands = ['play', 'stop', 'pause', 'next', 'previous'],
+    var currentCommands = ['play', 'stop', 'next', 'previous'],
         results = [],
         timeoutSet = false;
 
@@ -32,6 +32,7 @@ if (window['webkitSpeechRecognition']) {
               }
               if (i === 0) {
                 processCommands(el);
+                console.log(el)
                 speechRecognizer.abort();
                 //audioPlayer.toggleSpinner();
                 results = [];
