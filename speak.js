@@ -6,7 +6,7 @@ if (window['webkitSpeechRecognition']) {
     // and their commands are final. Set to false by default
     speechRecognizer.interimResults = true;
     speechRecognizer.lang = "en-IN";
-    var currentCommands = ['play', 'stop', 'next', 'previous'],
+    var currentCommands = ['play', 'pause', 'next', 'previous'],
         results = [],
         timeoutSet = false;
 

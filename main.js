@@ -460,7 +460,7 @@ function processCommands(cmd)
       case "play":
            playSong();
         break;
-      case 'stop':
+      case 'pause':
            pauseSong();
         break;
       case "next":
