@@ -65,6 +65,7 @@ var songs = [{
                               //initially currentSongNumber=1 
     audio.src = nextSongObj.fileName;        //changing the source of the song
     $('.play-icon').removeClass('fa-play').addClass('fa-pause');
+    audio.currentTime = currentTime;
     audio.play();
     changeCurrentSongDetails(nextSongObj);     //updating image
  }
