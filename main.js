@@ -58,17 +58,18 @@ var songs = [{
     } 
 //*******************************************************************      
   function playSong()
- {
+ {  
+    var currentTime = document.getElementById("time-elapse");
     var audio = document.querySelector('audio');
-    var nextSongObj=songs[currentSongNumber] //getting currentsong info from the 'songs' ARRAY
+    var nextSongObj=songs[currentSongNumber-1] //getting currentsong info from the 'songs' ARRAY
                               //initially currentSongNumber=1 
     audio.src = nextSongObj.fileName;        //changing the source of the song
     $('.play-icon').removeClass('fa-play').addClass('fa-pause');
     audio.play();
     changeCurrentSongDetails(nextSongObj);     //updating image
  }
- 
-    function pause()
+
+    function pauseSong()
     {
       var song = document.querySelector('audio'); //***Selecting audio tag
       $('.play-icon').removeClass('fa-pause').addClass('fa-play');
@@ -459,13 +460,13 @@ function processCommands(cmd)
            playSong();
         break;
       case 'pause':
-          pause();
+           pauseSong();
         break;
       case "next":
           nextSongPlay()();
         break;
       case "previous":
-        previousSongPlay();
+          previousSongPlay();
         break;  
       default:
         console.log("Your command was invalid!");
