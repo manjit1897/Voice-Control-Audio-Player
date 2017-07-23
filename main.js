@@ -337,7 +337,7 @@ $('#songs').DataTable(        //initializing DataTables
                               //initially currentSongNumber=1 
     audio.src = nextSongObj.fileName;        //changing the source of the song
     $('.play-icon').removeClass('fa-play').addClass('fa-pause');
-    song.play();
+    audio.play();
     changeCurrentSongDetails(nextSongObj);     //updating image
  }
 /*
