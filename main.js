@@ -57,7 +57,13 @@ var songs = [{
       }
     } 
 //*******************************************************************      
-
+    function pause()
+    {
+      var song = document.querySelector('audio'); //***Selecting audio tag
+      $('.play-icon').removeClass('fa-pause').addClass('fa-play');
+      song.pause();   //***  pause the song
+      
+    }
 /*
 // ARRAY variable to store music song
 var fileNames = ['song1.mp3','song2.mp3','song3.mp3','song4.mp3'];
@@ -369,6 +375,32 @@ $('.fa-step-forward').on('click', function()
     nextSongPlay()     
   });
 
+function previousSongPlay()
+{
+  var audio = document.querySelector('audio');
+  if(currentSongNumber>1)
+  {
+    var nextSongObj=songs[currentSongNumber-1] //getting currentsong info from the 'songs' ARRAY
+                              //initially currentSongNumber=1 
+    audio.src = nextSongObj.fileName;        //changing the source of the song
+    toggleSong();
+    changeCurrentSongDetails(nextSongObj);     //updating image
+    currentSongNumber = currentSongNumber - 1;   //changing current song number
+  }
+  else
+  {
+    var nextSongObj = songs[0];  //nextSongObj store info of first song which is in ARRAY 'songs[0]'
+    audio.src = nextSongObj.fileName;
+    toggleSong();
+    changeCurrentSongDetails(nextSongObj); //passing song info to changeCurrentSongDetails() fxn
+    currentSongNumber =  4;   //update  variable value
+  }
+}
+
+$('.fa-step-backward').on('click', function() 
+  { 
+    previousSongPlay()     
+  });
 
 //*********************************************************************************************************************
 function songOnEnd()
@@ -424,6 +456,15 @@ function processCommands(cmd)
       case "play":
            play();
         break;
+      case 'pause':
+          pause();
+        break;
+      case "next":
+          nextSongPlay()();
+        break;
+      case "previous":
+        previousSongPlay();
+        break;  
       default:
         console.log("Your command was invalid!");
     }
