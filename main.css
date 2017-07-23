@@ -72,23 +72,60 @@ h1 {
     flex-direction: column;
     color: white;
     background-color: #1f1f1f;
+    /******************************/
+    background-image: url("https://a-v2.sndcdn.com/assets/images/home/hp_image-6155d6b.jpg");
+    background-size:cover;
+    position:relative;
+    /*********************************/
 }
 .main header {
     height: 80px;
     background-color: #282828;
     padding: 1rem;
     color: #FFF;
+    
 }
 
-.main .content {
-    flex:1;
-    background-color: #1f1f1f;
+.content /*****************************/
+{
+    display: inline-flex;
+    /*background-image: url("https://a-v2.sndcdn.com/assets/images/home/hp_image-6155d6b.jpg");*/
+    /*background-color: violet;*/ 
+    background-size:cover;
+    position:relative;
+    width: 100%;
+    position: relative;
+    margin-top: 25px;
+}
+
+.playlist
+{
+    width: 250px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    background-color: white;
+}
+
+.playlist-section {
+    width: 800px;
+    position: relative;
+    background-color: green;
+}
+
+.commandlist-section
+{
+    width: 250px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: red;
+    position: relative;
 }
 
 .main footer {
     height: 80px;
     background-color: #282828;
-    padding-top: 1rem;
+    /*padding-top: 1rem;*/
 }
 
 .player-buttons {
@@ -104,6 +141,8 @@ h1 {
 
 .right.floated {
     float: right;
+    color:#2276e2;     /***************/
+    font-size: 30px;
 }
 
 .clickable {
@@ -142,11 +181,7 @@ h1 {
 
 }
 
-.main .content {
-    width: 800px;
-    margin: 2rem auto;
-}
-
+ 
 .list-headers {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid rgba(255,255,255,0.5);
@@ -199,10 +234,29 @@ h1 {
 .content {
     position: relative;
 }
+
+.current-song-detail
+{
+    position: relative;
+    margin-top:  auto;
+    margin-bottom:  auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-flex;
+    width: 800px;
+}
+
 .current-song-wrapper {
-    position: absolute;
-    bottom: 0;
+    position: relative;
     display: flex;
+    margin-right: 70px;
+}
+
+.context
+{
+    position: relative;
+    /*display: flex;*/
+    margin-top: -25px
 }
 
 .current-song-image {
@@ -218,6 +272,7 @@ h1 {
 }
 
 .current-song-album {
+    font-size: 1rem;
     margin-top: 0.4rem;
 }
 
@@ -251,25 +306,19 @@ table.dataTable tbody tr {
 }
 
 /*******************************************************************/
-
-.big {
-  font-size: 1.5em;
-  font-weight: bolder;
-}
-
-.display
-{
-    display: inline;
-}
 .command-list-heading
 {
-    margin-left: 15px;
-    width : 90px;
+    margin-left: 0px;
+    width : 250px;
 }
-.text-center
-{
-    text-align: center;
+
+.big {
+  font-size: 1rem;
+  font-weight: bolder;
+  text-align: center;
+  display: flex;
 }
+
 .slider-position
 {
     
