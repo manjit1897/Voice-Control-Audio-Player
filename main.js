@@ -322,19 +322,18 @@ $('#songs').DataTable(        //initializing DataTables
         paging: false        //turn off the page count by passing object in DataTable() fxn
     }
 );
+}
+//***********************************************************************************************
+ function play()
+ {
 
- $('.play-icon').on('click', function() 
-    {  
        var audio = document.querySelector('audio');
        var nextSongObj = songs[0];  //nextSongObj store info of first song which is in ARRAY 'songs[0]'
        audio.src = nextSongObj.fileName;
        toggleSong();
        changeCurrentSongDetails(nextSongObj); //passing song info to changeCurrentSongDetails() fxn
        currentSongNumber =  1;   //update  variable value
-    });
-}
-//***********************************************************************************************
- 
+ }
 /*
 function timeJump()             //jumps to the first end of the song 
 {
@@ -424,18 +423,6 @@ function processCommands(cmd)
   switch (cmd) {
       case "play":
            play();
-        break;
-      case 'pause':
-           stop();
-        break;
-      case "stop":
-           stop(true);
-        break;
-      case "next":
-           next();
-        break;
-      case "previous":
-           prev();
         break;
       default:
         this.speak("Your command was invalid!", false);
