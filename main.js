@@ -330,7 +330,7 @@ $('#songs').DataTable(        //initializing DataTables
 );
 }
 //***********************************************************************************************
- function play()
+ function playSong()
  {
     var audio = document.querySelector('audio');
     var nextSongObj=songs[currentSongNumber] //getting currentsong info from the 'songs' ARRAY
@@ -454,7 +454,7 @@ function processCommands(cmd)
 {
   switch (cmd) {
       case "play":
-           play();
+           playSong();
         break;
       case 'pause':
           pause();
