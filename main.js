@@ -57,6 +57,17 @@ var songs = [{
       }
     } 
 //*******************************************************************      
+  function playSong()
+ {
+    var audio = document.querySelector('audio');
+    var nextSongObj=songs[currentSongNumber] //getting currentsong info from the 'songs' ARRAY
+                              //initially currentSongNumber=1 
+    audio.src = nextSongObj.fileName;        //changing the source of the song
+    $('.play-icon').removeClass('fa-play').addClass('fa-pause');
+    audio.play();
+    changeCurrentSongDetails(nextSongObj);     //updating image
+ }
+ 
     function pause()
     {
       var song = document.querySelector('audio'); //***Selecting audio tag
@@ -330,16 +341,7 @@ $('#songs').DataTable(        //initializing DataTables
 );
 }
 //***********************************************************************************************
- function playSong()
- {
-    var audio = document.querySelector('audio');
-    var nextSongObj=songs[currentSongNumber] //getting currentsong info from the 'songs' ARRAY
-                              //initially currentSongNumber=1 
-    audio.src = nextSongObj.fileName;        //changing the source of the song
-    $('.play-icon').removeClass('fa-play').addClass('fa-pause');
-    audio.play();
-    changeCurrentSongDetails(nextSongObj);     //updating image
- }
+ 
 /*
 function timeJump()             //jumps to the first end of the song 
 {
