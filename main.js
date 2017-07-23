@@ -425,6 +425,6 @@ function processCommands(cmd)
            play();
         break;
       default:
-        this.speak("Your command was invalid!", false);
+        console.log("Your command was invalid!");
     }
 }
