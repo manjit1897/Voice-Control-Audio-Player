@@ -328,17 +328,29 @@ $('#songs').DataTable(        //initializing DataTables
         paging: false        //turn off the page count by passing object in DataTable() fxn
     }
 );
+function firstSongPlay()
+{
+  var audio = document.querySelector('audio');
+  var nextSongObj = songs[0];  //nextSongObj store info of first song which is in ARRAY 'songs[0]'
+  audio.src = nextSongObj.fileName;
+  toggleSong();
+  changeCurrentSongDetails(nextSongObj); //passing song info to changeCurrentSongDetails() fxn
+  currentSongNumber =  1;   //update  variable value
+}
 }
 //***********************************************************************************************
  function play()
  {
-
-       var audio = document.querySelector('audio');
-       var nextSongObj = songs[0];  //nextSongObj store info of first song which is in ARRAY 'songs[0]'
-       audio.src = nextSongObj.fileName;
-       toggleSong();
-       changeCurrentSongDetails(nextSongObj); //passing song info to changeCurrentSongDetails() fxn
-       currentSongNumber =  1;   //update  variable value
+    if(window.onload == true)
+    {
+      firstSongPlay();
+    }  
+    else
+    {
+      var song = document.querySelector('audio'); //***Selecting audio tag
+      $('.play-icon').removeClass('fa-play').addClass('fa-pause');
+      song.play();    // ***Then play the song
+    }
  }
 /*
 function timeJump()             //jumps to the first end of the song 
