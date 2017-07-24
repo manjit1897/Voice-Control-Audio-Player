@@ -77,6 +77,30 @@ var songs = [{
       song.pause();   //***  pause the song
       
     }
+
+ /*function progressBar()
+ {
+  var progress = document.getElementById("progress-fill");
+  var width=0;
+  var audio = document.querySelector('audio');
+  var currentSongObj=songs[currentSongNumber]
+  audio = currentSongObj.duration;
+
+  var id=setInterval(frame, audio);
+
+  function frame()
+  {
+    if(width>=100)
+    {
+      clearInterval(id);
+    }
+    else
+    {
+      width++;
+      progress.style.width= width + '%';
+    }
+  } 
+ }*/   
 /*
 // ARRAY variable to store music song
 var fileNames = ['song1.mp3','song2.mp3','song3.mp3','song4.mp3'];
@@ -244,15 +268,14 @@ $('.fa-volume-up').on('click',function() {
     var song = document.querySelector('audio');
     song.muted = false;
 });
-function volumeSliderChange()
+
+function volumeslider()
 {
-  var song = document.querySelector('audio');
-  var vol = document.getElementById("slider");
+var volumeslider= document.getElementById("volumeslider");
+var audio = document.querySelector('audio');
   
-  console.log(vol.value);
-  slider.onchange = function() {
-     song.volume = vol.value;
-  }
+  audio.volume=volumeslider.value
+  /*var song = document.querySelector('audio');*/
 }
 
 // ******** if space bar is clicked then play/pause the song  *************
@@ -296,9 +319,9 @@ function updateCurrentTime() {
 var song = document.querySelector('audio');
 //console.log(song.currentTime);
 //console.log(song.duration);
-var currentTime = Math.floor(song.currentTime);  //current Time of song is stored in variable
+var  currentTime = Math.floor(song.currentTime);  //current Time of song is stored in variable
 currentTime = fancyTimeFormat(currentTime);  //passing and getting currentTime in fancyTimeFormat
-var duration = Math.floor(song.duration);  // Total duration of song is stored in variable
+var  duration = Math.floor(song.duration);  // Total duration of song is stored in variable
 duration = fancyTimeFormat(duration);//passing and getting duration in fancyTimeFormat
 $('.time-elapsed').text(currentTime); 
 $('.song-duration').text(duration);
@@ -341,6 +364,7 @@ $('#songs').DataTable(        //initializing DataTables
         paging: false        //turn off the page count by passing object in DataTable() fxn
     }
 );
+
 }
 //***********************************************************************************************
  
@@ -350,7 +374,12 @@ function timeJump()             //jumps to the first end of the song
     var song = document.querySelector('audio')
     song.currentTime = song.duration - 0.1;
 }*/
-
+function changeLastCommand(cmd) 
+{
+    $(".l-command").fadeOut("slow")
+    .text(cmd)
+    .fadeIn("slow");
+  }
 //*******************playing next song********************************************
 function nextSongPlay()
 {
@@ -404,6 +433,7 @@ function previousSongPlay()
 $('.fa-step-backward').on('click', function() 
   { 
     previousSongPlay()     
+    
   });
 
 //*********************************************************************************************************************
@@ -456,6 +486,7 @@ $('audio').on('ended',function()    //on('ended') event tells the end of the aud
 //*****************************************************************************************************************************
 function processCommands(cmd)
 {
+  changeLastCommand(cmd);
   switch (cmd) {
       case "play":
            playSong();

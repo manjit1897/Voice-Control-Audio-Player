@@ -31,7 +31,7 @@
         </section>
 
 
-        <div class="main">             
+        <div class="main hidden">             
             <header >
                 <!-- <div style="height: 70px; width: 400px; display:inline;">
                   <ul style="display: inline;">
@@ -46,8 +46,20 @@
         <section class="content">
 
           <section class="playlist">
-            
-          </section> 
+            <!-- <div class="playlist-1">
+              <img src="song1.jpg" style="height: 80px; width">
+              <div>
+                <p class="current-song-name"></p>
+                <p class="current-song-album"></p>
+              </div> -->
+              <div class="context" style="margin: auto;">
+              <p style="font-size:1.7rem; margin-left: 10px ">Speech Command</p>
+              <div style="margin-top: 15px; margin-left: 10px ">
+                <p style="font-size:1rem; "> Last Command :- <span class="l-command"></span></p>
+                <!-- <p style="font-size:1rem; margin-top: -10px ">Status :- <span class="status"></span> </p> -->
+              </div>
+            </div>
+           </section> 
             
             <section class="playlist-section">
                 <audio></audio>
@@ -99,11 +111,11 @@
           <div class="command-list-heading ">
             <p class="big text-center" style="margin-left: 10px"><i class="fa fa-info-circle" aria-hidden="true"></i> Available Commands:</p>
             <ul class="list-group">
-              <li class="list-group-item"><strong>Play</strong> - Plays the current song</li>
-              <li class="list-group-item"><strong>Pause</strong> - Pauses the current song.</li>
-              <li class="list-group-item"><strong>Next</strong> Plays the next song in the list.</li>
-              <li class="list-group-item"><strong>Previous</strong> - Plays the previous song in the list. </li>
-              <li class="list-group-item"><strong>SongName</strong> - Plays a song with a particular name</li>
+              <li class="list-group-item" style="font-size: 1.1rem"><strong>Play</strong> - Plays the current song</li>
+              <li class="list-group-item" style="font-size: 1.1rem"><strong>Pause</strong> - Pauses the current song.</li>
+              <li class="list-group-item" style="font-size: 1.1rem"><strong>Next</strong> - Plays the next song in the list.</li>
+              <li class="list-group-item" style="font-size: 1.1rem"><strong>Previous</strong> - Plays the previous song in the list. </li>
+              <!-- <li class="list-group-item"><strong>SongName</strong> - Plays a song with a particular name</li> -->
         </ul>
            </div>
            </section>
@@ -119,13 +131,7 @@
               </div>
             </div> 
 
-            <div class="context">
-              <p style="font-size:1.7rem ">Contextual</p>
-              <div style="margin-top: -20px">
-                <p style="font-size:1rem "> Last Command :- <span class="l-command">play</span></p>
-                <p style="font-size:1rem; margin-top: -10px ">Status :- <span class="status">badri ki dulhaniya</span> </p>
-              </div>
-            </div>
+            
           </div>
 
 
@@ -138,13 +144,13 @@
                         <i class="fa fa-step-forward clickable" aria-hidden="true"></i>
                         <i class="fa fa-repeat disabled clickable" aria-hidden="true"></i>
                         <i class="fa fa-volume-down clickable" aria-hidden="true"></i>
-                        <input id="slider" class="slider-position" type="range" min="0" max="100" value="50"   > 
+                        <input id="volumeslider" class="slider-position" type="range" min="0" max="100" value="100" step="1"   > 
                         <i class="fa fa-volume-up clickable" aria-hidden="true"></i>
                     </div>                              
                     <div class="progress-wrapper">         
                         <span class="time-elapsed" id="time-elapse"> </span>
                         <div class="player-progress">          
-                            <div class="progress-filled"> </div>     
+                            <div class="progress-filled" id="progress-fill"> </div>     
                         </div>
                          <span class="song-duration"></span>
                     </div>                                          
@@ -159,7 +165,7 @@
 
 <script src="main.js"></script>
 
- <script src="speak.js"></script>
+<script src="speak.js"></script> 
 </body>
 
 </html>
