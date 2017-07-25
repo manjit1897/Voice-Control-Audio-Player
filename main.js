@@ -78,29 +78,45 @@ var songs = [{
       
     }
 
- /*function progressBar()
+ function progressBar()
  {
-  var progress = document.getElementById("progress-fill");
-  var width=0;
-  var audio = document.querySelector('audio');
-  var currentSongObj=songs[currentSongNumber]
-  audio = currentSongObj.duration;
+  //var progress = document.getElementById("progress-fill");
+  // var width=0;
+  var song = document.querySelector('audio');
+  var ct =song.currentTime;
+  var td =song.duration;
+  var percentage = (ct/td)*100;
+  $(".progress-filled").css('width',percentage+"%");
+ } 
+ $(".player-progress").click(function(event) {
+    var $this = $(this);
 
-  var id=setInterval(frame, audio);
+    // to get part of width of progress bar clicked
+    var widthclicked = event.pageX - $this.offset().left;
+    var totalWidth = $this.width(); // can also be cached somewhere in the app if it doesn't change
 
-  function frame()
-  {
-    if(width>=100)
-    {
-      clearInterval(id);
-    }
-    else
-    {
-      width++;
-      progress.style.width= width + '%';
-    }
-  } 
- }*/   
+    // do calculation of the seconds clicked
+    var calc = (widthclicked / totalWidth) * 100 ; // get the percent of bar clicked and multiply in by the duration
+
+
+var song = document.querySelector('audio');
+song.currentTime = (song.duration*calc)/100;
+
+progressBar();
+
+
+
+});  
+//  function updateTimer(){
+// var song = document.querySelector('audio');
+// var ct =song.currentTime;
+// var td =song.duration;
+// var percentage = (ct/td)*100;
+// $(".progress-filled").css('width',percentage+"%");
+
+
+
+// }
 /*
 // ARRAY variable to store music song
 var fileNames = ['song1.mp3','song2.mp3','song3.mp3','song4.mp3'];
@@ -246,8 +262,15 @@ $('.fa-repeat').on('click',function() {
 
 //*********play song randomly in loop*********************************************************
 $('.fa-random').on('click',function() {
-    $('.fa-random').toggleClass('disabled')
-        willShuffle = 1 - willShuffle;
+    $('.fa-random').toggleClass('disabled');
+    if(willShuffle==0){
+
+    willShuffle=1;
+}
+else {
+  willShuffle=0;
+}
+       // willShuffle = 1 - willShuffle;
         console.log(currentSongNumber);
 });
 //*********************************************************************************************
@@ -259,24 +282,43 @@ $('.fa-random').on('click',function() {
         console.log(currentSongNumber);
     });
 //*******************************************************************************
-$('.fa-volume-down').on('click',function() {
-    var song = document.querySelector('audio');
-    song.muted = true;
-});
+// $('.fa-volume-down').on('click',function() {
+//     var song = document.querySelector('audio');
+//     song.muted = true;
+// });
 
-$('.fa-volume-up').on('click',function() {
-    var song = document.querySelector('audio');
-    song.muted = false;
-});
+// $('.fa-volume-up').on('click',function() {
+//     var song = document.querySelector('audio');
+//     song.muted = false;
+// });
 
-function volumeslider()
-{
-var volumeslider= document.getElementById("volumeslider");
-var audio = document.querySelector('audio');
+// function volumeslider()
+// {
+// var volumeslider= document.getElementById("volumeslider");
+// var audio = document.querySelector('audio');
   
-  audio.volume=volumeslider.value
-  /*var song = document.querySelector('audio');*/
+//   audio.volume=volumeslider.value
+//   /*var song = document.querySelector('audio');*/
+// }
+// Function -  to set volume at a given percentage
+function setVolume(percentage){
+  var audio = document.querySelector('audio');
+  audio.volume = percentage;
+
+  var percentageOfVolume = audio.volume;
+  var percentageOfVolumeSlider = 100 * percentageOfVolume;
+
+  $('.volume-filled').css("width", Math.round(percentageOfVolumeSlider) + "%");
 }
+
+//Set's new volume id based off of the click on the volume bar.
+// Function - To calculate where click event has occured
+$('.volume-progress').on('click', function setNewVolume(event){
+  var volumeSliderWidth = event.offsetX;
+  var percentage = volumeSliderWidth/120;
+  console.log(volumeSliderWidth+" "+percentage);
+  setVolume(percentage);
+});
 
 // ******** if space bar is clicked then play/pause the song  *************
     $('body').on('keypress', function(event)  //event getting a no. of info  
@@ -346,6 +388,9 @@ setInterval(function()    // code bar-bar run hoga after 1 second
 {
 updateCurrentTime();    //Here only the updateCurrentTime() fxn is called
 },1000);
+setInterval(function() {
+        progressBar();
+    }, 1000);
 
 for(var i =0; i < songs.length;i++) //songs.length=length of the OBJECT 'songs'
   {
@@ -437,6 +482,11 @@ $('.fa-step-backward').on('click', function()
   });
 
 //*********************************************************************************************************************
+function randomExcluded(min, max, excluded) {
+    var n = Math.floor(Math.random() * (max-min) + min);
+    if (n >= excluded) n++;
+    return n;
+}
 function songOnEnd()
 {
   var audio = document.querySelector('audio');
@@ -472,7 +522,6 @@ function songOnEnd()
         changeCurrentSongDetails(nextSongObj); //passing song info to changeCurrentSongDetails() fxn
         currentSongNumber =  1;   //update  variable value
     }
-
     else       //The else condition runs if we are on the last song
     {
         $('.play-icon').removeClass('fa-pause').addClass('fa-play');   //When the last song ends, it changes the play icon 
@@ -482,7 +531,7 @@ function songOnEnd()
 $('audio').on('ended',function()    //on('ended') event tells the end of the audio or video
 {                                   
   songOnEnd();   
-})
+});
 //*****************************************************************************************************************************
 function processCommands(cmd)
 {
