@@ -57,9 +57,11 @@ var songs = [{
       }
     } 
 //*******************************************************************      
+
+//*******************play song on speech command**************************************
   function playSong()
  {  
-    var currentTime = document.getElementById("time-elapse");
+    var currentTime = document.getElementById("time-elapse");  
     var audio = document.querySelector('audio');
     var nextSongObj=songs[currentSongNumber-1] //getting currentsong info from the 'songs' ARRAY
                               //initially currentSongNumber=1 
@@ -69,7 +71,9 @@ var songs = [{
     audio.currentTime = currentTime;
     changeCurrentSongDetails(nextSongObj);     //updating image
  }
+ //************************************************************************************
 
+//*************pause song on voice command*************************************
     function pauseSong()
     {
       var song = document.querySelector('audio'); //***Selecting audio tag
@@ -77,22 +81,28 @@ var songs = [{
       song.pause();   //***  pause the song
       
     }
+//******************************************************************************************
 
+//***************fxn to see the progress of song in progressBar***********************
  function progressBar()
  {
   //var progress = document.getElementById("progress-fill");
   // var width=0;
   var song = document.querySelector('audio');
-  var ct =song.currentTime;
-  var td =song.duration;
-  var percentage = (ct/td)*100;
-  $(".progress-filled").css('width',percentage+"%");
+  var ct =song.currentTime;   //storing current time of song in var ct
+  var td =song.duration;     ////storing duration of song in var td
+  var percentage = (ct/td)*100;   //calculating percentage
+  $(".progress-filled").css('width',percentage+"%");   //adding css to progress filled
  } 
- $(".player-progress").click(function(event) {
-    var $this = $(this);
+//*********************************************************************************
+
+//********************on clicking song progressbar changing current time of song*****************
+ $(".player-progress").click(function(event) {   //
+    var $this = $(this); //getting values of progress bar whose class is player-progress
 
     // to get part of width of progress bar clicked
-    var widthclicked = event.pageX - $this.offset().left;
+    var widthclicked = event.pageX - $this.offset().left;   //The event.pageX property returns the position of the mouse pointer, relative to the left edge of the document.
+                                                            //The offset() method returns the offset coordinates for the selected elements,  
     var totalWidth = $this.width(); // can also be cached somewhere in the app if it doesn't change
 
     // do calculation of the seconds clicked
@@ -100,13 +110,13 @@ var songs = [{
 
 
 var song = document.querySelector('audio');
-song.currentTime = (song.duration*calc)/100;
+song.currentTime = (song.duration*calc)/100;   //calculating value of current time after clicking the progress bar
 
-progressBar();
-
-
+progressBar();   //calling fxn
 
 });  
+//***********************************************************************************************************
+
 //  function updateTimer(){
 // var song = document.querySelector('audio');
 // var ct =song.currentTime;
@@ -117,52 +127,8 @@ progressBar();
 
 
 // }
-/*
-// ARRAY variable to store music song
-var fileNames = ['song1.mp3','song2.mp3','song3.mp3','song4.mp3'];
-*/
 
-/*
-//***********************writing different code for each song to play*********************************************
-$('#song1').click(function() {
-var audio = document.querySelector('audio');
-var currentSong = audio.src;    //storing source of current song in currentSong variable
-  if(currentSong.search(fileNames[0]) != -1)  //if the current song text is similar to fileNames[0] then call the toggleSong fxn
-  {
-    //console.log(audio.paused)
-    // audio.play();
-    //console.log('If statement executing');
-    toggleSong();    // calling toggleSong() fxn
-  }
-  else    //else audio ke source main fileNmaes[0] dal dena then apply toggleSong fxn
-  {
-   //console.log('Else statement executing');
-   audio.src= fileNames[0];
-   toggleSong();
-  }
-});
-
-$('#song2').click(function() {
-var audio = document.querySelector('audio');
-audio.src = fileNames[1];
-toggleSong();
-});
-
-$('#song3').click(function() {
-var audio = document.querySelector('audio');
-audio.src = fileNames[2];
-toggleSong();
-});
-
-$('#song4').click(function() {
-var audio = document.querySelector('audio');
-audio.src = fileNames[3];
-toggleSong();
-});
-//******************************************************************************************************
-*/
-
-//***********************************************************************************************
+//*********************changing current song details***********************************************
 function changeCurrentSongDetails(songObj) 
 {
     $('.current-song-image').attr('src','img/' + songObj.image) //1. using jQuery to select the element with class 'current-song-image'
@@ -203,7 +169,7 @@ function addSongNameClickEvent(songObj, position)  //addSongNameClickEvent fxn g
 }
 
 
-//******************************************************************
+//*************************opening main page on clicking button in welcome screen********
     $('.welcome-screen button').on('click', function() {
         var name = $('#name-input').val();
         var email =$('#email-input').val();
@@ -239,24 +205,11 @@ function addSongNameClickEvent(songObj, position)  //addSongNameClickEvent fxn g
           }
     });
 
- /* $('body').on('keypress', function(event)
-  {
-      var target = event.target;       //1. Save the target of the event in a variable
-                                       //The target is the place where the event took place
-     if (event.keyCode == 13 )  //This condition first checks if the ENTER key is pressed // Don't forget to write the tag name in CAPS
-                                                                //Then it checks if the place where the event occurred had an input tag or not        
-        {
-
-          $('.welcome-button').click();
-        }
-  });
-*///******************************************************************
 
 //************songs play in contionous loop**********************************************
 $('.fa-repeat').on('click',function() {
     $('.fa-repeat').toggleClass('disabled')  //toggle class ko add or remove krega
     willLoop = 1 - willLoop;           //It changes the value of the variable willLoop
-    console.log(currentSongNumber);
 });
 //******************************************************************************************
 
@@ -279,28 +232,10 @@ else {
     $('.play-icon').on('click', function() 
     {
         toggleSong();
-        console.log(currentSongNumber);
     });
-//*******************************************************************************
-// $('.fa-volume-down').on('click',function() {
-//     var song = document.querySelector('audio');
-//     song.muted = true;
-// });
+//*********************************************************************************
 
-// $('.fa-volume-up').on('click',function() {
-//     var song = document.querySelector('audio');
-//     song.muted = false;
-// });
-
-// function volumeslider()
-// {
-// var volumeslider= document.getElementById("volumeslider");
-// var audio = document.querySelector('audio');
-  
-//   audio.volume=volumeslider.value
-//   /*var song = document.querySelector('audio');*/
-// }
-// Function -  to set volume at a given percentage
+//****************** functionality to change the volume bar using a slide************
 function setVolume(percentage){
   var audio = document.querySelector('audio');
   audio.volume = percentage;
@@ -319,6 +254,7 @@ $('.volume-progress').on('click', function setNewVolume(event){
   console.log(volumeSliderWidth+" "+percentage);
   setVolume(percentage);
 });
+//************************************************************************************
 
 // ******** if space bar is clicked then play/pause the song  *************
     $('body').on('keypress', function(event)  //event getting a no. of info  
